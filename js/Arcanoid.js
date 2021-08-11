@@ -186,9 +186,9 @@ function drawAll() {
     ctx.font = "20px Arial";
     ctx.fillText(paddle.lives, 10, 20); 
 
-    ctx.fillStyle = "white"
-    ctx.font = "20px Arial";
-    ctx.fillText(blocks_count, 470, 20); 
+//    ctx.fillStyle = "white"
+//    ctx.font = "20px Arial";
+//    ctx.fillText(blocks_count, 470, 20); 
 }
 
 function gameLoop() {
