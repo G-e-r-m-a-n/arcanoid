@@ -75,7 +75,7 @@ class Ball {
                 blocks[i].x = -100;
                 this.dx = -this.dx;
                 blocks_count--;
-                if ((blocks_count < 1) && (paddle.lives > 0)) {
+                if (blocks_count < 1) {
                     drawAll();
                     youWin();
                     isAlive = false;
@@ -89,7 +89,7 @@ class Ball {
                 blocks[i].x = -100;
                 this.dy = -this.dy;
                 blocks_count--;
-                if ((blocks_count < 1) && (paddle.lives > 0)) {
+                if (blocks_count < 1) {
                     drawAll();
                     youWin();
                     isAlive = false;
@@ -106,11 +106,13 @@ class Ball {
         if (this.y + this.height > W_H) {
             this.dy = -this.dy;
             paddle.lives--;
-            if ((paddle.lives < 1) && (blocks_count > 0)) {
+            if (paddle.lives < 1) {
                 drawAll();
                 gameOver();
                 isAlive = false;
                 playAgain();
+            } else {
+                isBallMove = false;
             }
         }
     }
@@ -157,9 +159,18 @@ function init() {
     }    
 }
 
+function ballToPaddle() {
+
+}
+
 function moveAll() {
     if (isBallMove) {
-        ball.move();
+        if (isAlive) {
+            ball.move();
+        }
+    } else {
+        ball.x = paddle.x + 39;
+        ball.y = paddle.y - 12;
     }
 }
 
@@ -204,7 +215,11 @@ document.addEventListener("mousemove", function MM(event) {
 
 
 document.addEventListener("click", function MM(event) {
-    if (!isAlive) {
+    if (isAlive) {
+        if (!isBallMove) {
+            isBallMove = true;
+        }
+    } else {
         var rect = canvas.getBoundingClientRect();
         var newX = Math.floor(event.clientX - rect.left);
         var newY = Math.floor(event.clientY - rect.top);
@@ -213,6 +228,7 @@ document.addEventListener("click", function MM(event) {
             init();
         }
     }
+
 })
 
 main()
