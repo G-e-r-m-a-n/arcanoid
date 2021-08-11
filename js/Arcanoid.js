@@ -16,6 +16,7 @@ const W_H = 450;
 var blocks_count;
 
 var isAlive;
+var isBallMove = false;
 var paddle;
 var blocks = [];
 var ball;
@@ -74,7 +75,8 @@ class Ball {
                 blocks[i].x = -100;
                 this.dx = -this.dx;
                 blocks_count--;
-                if (blocks_count < 1) {
+                if ((blocks_count < 1) && (paddle.lives > 0)) {
+                    drawAll();
                     youWin();
                     isAlive = false;
                     playAgain();
@@ -88,6 +90,7 @@ class Ball {
                 this.dy = -this.dy;
                 blocks_count--;
                 if ((blocks_count < 1) && (paddle.lives > 0)) {
+                    drawAll();
                     youWin();
                     isAlive = false;
                     playAgain();
@@ -104,6 +107,7 @@ class Ball {
             this.dy = -this.dy;
             paddle.lives--;
             if ((paddle.lives < 1) && (blocks_count > 0)) {
+                drawAll();
                 gameOver();
                 isAlive = false;
                 playAgain();
@@ -154,7 +158,9 @@ function init() {
 }
 
 function moveAll() {
-    ball.move();
+    if (isBallMove) {
+        ball.move();
+    }
 }
 
 function drawAll() {
